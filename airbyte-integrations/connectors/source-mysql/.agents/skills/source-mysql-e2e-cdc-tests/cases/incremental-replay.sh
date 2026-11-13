@@ -10,6 +10,7 @@ LIB="$REPO_ROOT/airbyte-integrations/db-harness-lib"
 REPRO_OUT="${REPRO_OUT:-/tmp/source-mysql-repro}"
 VERSION="${VERSION:-3.53.4}"
 STEP_NAME="${STEP_NAME:-cdc-replay}"
+MUTATE_SQL="${MUTATE_SQL:-$SKILL/fixtures/sql/mutate-insert-users.sql}"
 BASELINE_STATE="$REPRO_OUT/$STEP_NAME/state.json"
 export REPRO_OUT
 
@@ -30,7 +31,7 @@ mkdir -p "$(dirname "$BASELINE_STATE")"
   "$REPRO_OUT/$STEP_NAME/baseline/read/stdout.txt" \
   > "$BASELINE_STATE"
 "$GENERIC/scripts/apply-sql.sh" \
-  "$SKILL/fixtures/sql/mutate-insert-users.sql"
+  "$MUTATE_SQL"
 
 "$GENERIC/scripts/run.sh" \
   --command=read \

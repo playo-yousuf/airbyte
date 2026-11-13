@@ -16,7 +16,11 @@ airbyteBulkConnector {
 dependencies {
     api "com.google.protobuf:protobuf-java:4.27.5" // for fixing vulnerability of protobuf-java used by Debezium
     implementation 'com.mysql:mysql-connector-j:9.1.0'
-    implementation 'io.debezium:debezium-connector-mysql:3.4.3.Final' // keep in step with Debezium in the Bulk CDK's extract-cdc toolkit
+    // Debezium 3.6+ parses ALTER TABLE ... DROP COLUMN c CASCADE; pinned ahead of the Bulk CDK's extract-cdc toolkit (3.4.3.Final).
+    implementation 'io.debezium:debezium-connector-mysql:3.6.3.Final'
+    implementation 'io.debezium:debezium-embedded:3.6.3.Final'
+    implementation 'io.debezium:debezium-api:3.6.3.Final'
+    implementation 'io.debezium:debezium-storage-file:3.6.3.Final'
 
     testImplementation 'org.testcontainers:mysql'
     testImplementation 'io.mockk:mockk:1.14.11'
